@@ -6,7 +6,7 @@
 /*   By: lemmon <lemmon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 12:39:53 by lemmon            #+#    #+#             */
-/*   Updated: 2022/05/30 18:45:14 by lemmon           ###   ########.fr       */
+/*   Updated: 2022/05/31 20:23:08 by lemmon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,30 +112,90 @@ void	check_line(char *line)
 // 	}
 // }
 
+int	is_direction(char *line, t_map *map)
+{
+	if ((line[0] == 'N' && line[1] == 'O' && map->flag_north == 0) 
+		|| (line[0] == 'S' && line[1] == 'O' && map->flag_south == 0)
+		|| (line[0] == 'W' && line[1] == 'E' && map->flag_west == 0)
+		|| (line[0] == 'E' && line[1] == 'A' && map->flag_east == 0))
+		return (1);
+	return (0);
+}
+
+// int	is_floor_ceiling(char *line, t_map map)
+// {
+// 	if (line[0] == 'F' || line[0] == 'C')
+// 		return (1);
+// 	return (0);
+// }
+
+// int	is_map(char *line, t_map *map)
+// {
+// 	if (line[0] == ' ' || line[0] == '1')
+// 		return (1);
+// 	return (0);
+// }
+void	check_dublicate_direction(char *line, t_map *map)
+{
+	if (line[0] == 'N' && line[1] == 'O')
+		map->flag_north = 1;
+	else if (line[0] == 'S' && line[1] == 'O')
+		map->flag_south = 1;
+	else if (line[0] == 'W' && line[1] == 'E')
+		map->flag_west = 1;
+	else if(line[0] == 'E' && line[1] == 'A')
+		map->flag_east = 1;
+}
+
+void	parse_direction(char *line, t_map *map)
+{
+	char **array;
+	int	fd;
+	char *buf;
+	
+	buf = NULL;
+	check_dublicate_direction(line, map);
+	array = ft_split(line, ' ');
+	if (!array[1] || array[2])
+		ft_error("invalid content of direction, hmm...");
+	if (check_extention(line, 2)) 
+		ft_error("need only '.xpm' extention"); // or '.png'
+	fd = open(array[1], O_RDONLY);
+	if (fd < 0)
+		ft_error("can't open this file, sorry..");
+	// printf("fd - %d\n", fd);
+	if (read(fd, &buf, 1) <= 0)
+		ft_error("can't read this file, sorry..");
+	// int bytes = read(fd, &buf, 1);
+	// printf("bytes - %d\n", bytes);
+	
+}
+
 void	parsing(t_map *map)
 {
 	char	**line;
+	int		i;
 	
-	line = get_line_file(map->fd);
-	int i = 0;
-	while (line[i]) {
-		printf ("%s\n", line[i]);
+	line = get_line_file(map->fd, map);
+	int j = 0;
+	while (line[j]) { //
+		printf ("%d %s\n", j, line[j]);
+		++j;
+	} //
+	i = 0;
+	while (i < map->count_line)
+	{
+		if (is_direction(line[i], map))
+			parse_direction(line[i], map);
+		// else if (is_floor_ceiling(line[i], map))
+		// 	parse_floor_ceiling(line[i], map);
+		// else if (is_map(line[i], map))
+		// 	parse_map(line, map);
+		else
+		{
+			printf("line - %s\n", line[i]);
+			ft_error("invalid content of map, hhmm...");
+		}
 		++i;
 	}
-	int j = 0;
-	// int k = 0;
-	printf("line - %s\n", line[j]);
-	// while (j < 20) // из get_line_file взять количество получившихся строк
-	// {
-	// 	int  k = 0;
-	// 	if ((line[j][k] == "NO") || (line[j][k] == "SO")
-	// 		|| (line[j][k] == "WE") || (line[j][k] == "EA")
-	// 		parse_direction(line[j][k]);
-	// 	else if ((line[j][k] == "F") || (line[j][k]] == "C"))
-	// 		parse_floor_ceiling(line[j][k]); // возможно лучше посылать именно указатель
-	// 	else if (line[])
-	// }
-	// choice_parcing_path()
-	
-	
 }

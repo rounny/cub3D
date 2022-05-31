@@ -6,86 +6,110 @@
 /*   By: lemmon <lemmon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:53:03 by lemmon            #+#    #+#             */
-/*   Updated: 2022/03/19 12:53:03 by lemmon           ###   ########.fr       */
+/*   Updated: 2022/05/31 18:58:49 by lemmon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_word_count(const char *s, char c)
+static int	ft_found_word(char const *s, char c)
 {
+	int	countword;
 	int	i;
-	int	word_count;
-	int	len;
-	int	ss;
 
-	len = 0;
-	ss = 0;
-	while (s[len])
-		len++;
+	if (s == NULL || (c == 0 && ft_strlen(s) == 0))
+		return (0);
+	countword = 0;
 	i = 0;
-	word_count = 0;
-	while (s[i])
+	while (s[i] != '\0')
 	{
-		if (s[i] != c && ss == 0)
-		{
-			ss = 1;
-			word_count++;
-		}
-		else if (s[i] == c)
-			ss = 0;
-		i++;
+		while (s[i] == c)
+			i++;
+		if (s[i] != c && s[i] != '\0')
+			countword++;
+		while (s[i] != c && s[i] != '\0')
+			i++;
 	}
-	return (word_count);
+	return (countword);
 }
 
-static char	*ft_str_create(const char *s, char c)
+static void	ft_free_memory_split(char **matrix, int x)
+{
+	x--;
+	while (x >= 0)
+	{
+		free(matrix[x]);
+		x--;
+	}
+	free(matrix);
+}
+
+static char	**ft_create(char **matrix, int countword, char const *s, char c)
 {
 	int		i;
-	char	*str;
+	int		x;
+	int		lenword;
 
 	i = 0;
-	while (s[i] && s[i] != c)
-		i++;
-	str = (char *)malloc(sizeof(char) * (i + 1));
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, s, i + 1);
-	return (str);
-}
-
-static void	ft_clear(char **arr, int i)
-{
-	while (i > 0)
-		free(arr[i--]);
-	free(arr);
-}
-
-char	**ft_split(const char *s, char c)
-{
-	char	**out;
-	int		i;
-	int		word_count;
-
-	if (!s)
-		return (NULL);
-	i = -1;
-	word_count = ft_word_count(s, c);
-	out = (char **)malloc(sizeof(char *) * (word_count + 1));
-	if (!out)
-		return (NULL);
-	while (++i < word_count)
+	x = -1;
+	while (++x < countword)
 	{
-		while (*s == c)
-			s++;
-		out[i] = ft_str_create(s, c);
-		if (!out)
+		lenword = 0;
+		while (s[i] == c)
+			i++;
+		while (s[i] != c && s[i] != '\0')
 		{
-			ft_clear(out, i);
+			i++;
+			lenword++;
+		}
+		matrix[x] = (char *)malloc(sizeof(char) * (lenword + 1));
+		if (matrix[x] == NULL)
+		{
+			ft_free_memory_split(matrix, x);
 			return (NULL);
 		}
-		s = s + ft_strlen(out[i]);
+		matrix[x][lenword] = '\0';
 	}
-	out[i] = 0;
-	return (out);
+	return (matrix);
+}
+
+static char	**ft_saveword(char **matrix, int countword, char const *s, char c)
+{
+	int	y;
+	int	i;
+	int	x;
+
+	i = 0;
+	x = -1;
+	while (++x < countword)
+	{
+		while (s[i] == c)
+			i++;
+		y = 0;
+		while (s[i] != c && s[i] != '\0')
+		{
+			matrix[x][y] = s[i];
+			i++;
+			y++;
+		}
+		matrix[x][y] = '\0';
+	}
+	matrix[x] = NULL;
+	return (matrix);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**matrix;
+	int		countword;
+
+	countword = ft_found_word(s, c);
+	matrix = (char **)malloc(sizeof(char *) * (countword + 1));
+	if (matrix == NULL)
+		return (NULL);
+	matrix = ft_create(matrix, countword, s, c);
+	if (matrix == NULL)
+		return (NULL);
+	matrix = ft_saveword(matrix, countword, s, c);
+	return (matrix);
 }

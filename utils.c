@@ -6,7 +6,7 @@
 /*   By: lemmon <lemmon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 12:35:46 by lemmon            #+#    #+#             */
-/*   Updated: 2022/05/30 18:16:37 by lemmon           ###   ########.fr       */
+/*   Updated: 2022/05/31 15:35:37 by lemmon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_chrjoin(char *s1, char s2)
 	return (tmp);
 }
 
-char	**get_line_file(int fd)
+char	**get_line_file(int fd, t_map *map)
 {
 	char	ch;
 	char	*res;
@@ -75,7 +75,7 @@ char	**get_line_file(int fd)
 		while (read(fd, &ch, 1))
 			res = ft_chrjoin(res, ch);
 		res = ft_chrjoin(res, '\0');
-		string = ft_split(res, '\n');
+		string = ft_split_cub(res, '\n', map);
 		if (!string)
 			return (NULL);
 		return (string);

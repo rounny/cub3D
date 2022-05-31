@@ -9,7 +9,7 @@ LIBFT_DIR	= ./libft/
 LIBFT		= $(addprefix $(LIBFT_DIR), libft.a)
 
 HEAD	=	cub.h
-SRCS	=	main.c utils.c parse_map.c 
+SRCS	=	main.c utils.c parse_map.c split_cub.c
 
 OBJS	=	$(SRCS:%.c=%.o)
 

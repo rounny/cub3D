@@ -22,10 +22,10 @@
 
 
 
-NO ./textures/nothern_wall.xpm
-SO ./textures/south_wall.(xpm)
-WE ./textures/western_wall.
-EA ./textures/east_wall.
+NO ./textures/north_wall.xpm
+SO ./textures/south_wall.xpm
+WE ./textures/western_wall.xpm
+EA ./textures/east_wall.xpm
 
 
 
