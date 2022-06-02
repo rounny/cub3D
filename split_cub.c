@@ -6,7 +6,7 @@
 /*   By: lemmon <lemmon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 15:25:24 by lemmon            #+#    #+#             */
-/*   Updated: 2022/05/31 18:57:23 by lemmon           ###   ########.fr       */
+/*   Updated: 2022/06/02 19:13:28 by lemmon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ static char	**ft_saveword_cub(char **matrix, int countword, char const *s, char 
 			i++;
 			y++;
 		}
-		// printf("")
 		matrix[x][y] = '\0';
 	}
 	matrix[x] = NULL;
@@ -105,7 +104,13 @@ char	**ft_split_cub(char const *s, char c, t_map *map)
 	int		countword;
 
 	countword = ft_found_word_cub(s, c);
-	map->count_line = countword;
+	// map->count_line = countword;
+	if (map->flag_line == 0)
+	{
+		map->count_line = countword;
+		map->flag_line = 1;
+	}
+	map->count_argc = countword;
 	matrix = (char **)malloc(sizeof(char *) * (countword + 1));
 	if (matrix == NULL)
 		return (NULL);

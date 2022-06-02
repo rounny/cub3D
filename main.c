@@ -60,6 +60,9 @@ int main (int ac, char **av)
 		ft_error("wrong number of arguments");
 	check_map(ac, av, &map);
 	parsing(&map);
-	// parsing(&map, av);
+	printf("north - %s\n", map.north_path);
+	printf("south - %s\n", map.south_path);
+	printf("west - %s\n", map.west_path);
+	printf("east - %s\n", map.east_path);
 	return (0);
 }

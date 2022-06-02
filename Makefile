@@ -1,7 +1,7 @@
 NAME	=	cub3D
 
 CC		=	cc
-CFLAGS	=	-Wall -Werror -Wextra
+CFLAGS	=	-Wall -Werror -Wextra -fsanitize=address
 LDFLAGS	=	-L$(LIBFT_DIR)
 RM		=	rm -rf
 
@@ -9,7 +9,9 @@ LIBFT_DIR	= ./libft/
 LIBFT		= $(addprefix $(LIBFT_DIR), libft.a)
 
 HEAD	=	cub.h
-SRCS	=	main.c utils.c parse_map.c split_cub.c
+SRCS	=	main.c utils.c parse_map.c split_cub.c \
+			parser/directions.c parser/floor_ceiling.c \
+			
 
 OBJS	=	$(SRCS:%.c=%.o)
 
