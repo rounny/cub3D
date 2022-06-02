@@ -6,7 +6,7 @@
 /*   By: lemmon <lemmon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:42:07 by lemmon            #+#    #+#             */
-/*   Updated: 2022/06/02 19:19:27 by lemmon           ###   ########.fr       */
+/*   Updated: 2022/06/02 19:33:07 by lemmon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	parse_direction(char *line, t_map *map)
 	fd = open(array[1], O_RDONLY);
 	if (fd < 0)
 		ft_error("can't open this file, sorry..");
-	// printf("fd - %d\n", fd);
 	if (read(fd, &buf, 1) <= 0)
 		ft_error("can't read this file, sorry..");
 	fill_direction(line, map, array[1]);
