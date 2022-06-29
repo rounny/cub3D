@@ -6,7 +6,7 @@
 /*   By: lemmon <lemmon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:55:05 by lemmon            #+#    #+#             */
-/*   Updated: 2022/05/31 18:59:09 by lemmon           ###   ########.fr       */
+/*   Updated: 2022/06/06 14:16:39 by lemmon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(int));
 void	ft_lstclear(t_list **lst, void (*del)(int, int));
 void	ft_lstiter(t_list *lst, void (*f)(int));
 t_list	*ft_lstmap(t_list *lst, int (*f)(int), void (*del)(int, int));
+
+void	*ft_calloc_int(size_t count, int sym);
 
 #endif

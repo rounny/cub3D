@@ -6,11 +6,33 @@
 /*   By: lemmon <lemmon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 12:35:46 by lemmon            #+#    #+#             */
-/*   Updated: 2022/06/02 13:29:24 by lemmon           ###   ########.fr       */
+/*   Updated: 2022/06/08 14:07:15 by lemmon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+
+void	count_width(char **array, t_map *map, int index)
+{
+	int	i;
+	int	j;
+	int	count;
+	
+	i = 0;
+	j = 0;
+	count = 0;
+	while (index < map->count_line)
+	{
+		i = 0;
+		while (array[j][i])
+			i++;
+		if (i > count)
+			count = i;
+		j++;
+		index++;
+	}
+	map->width = count;
+}
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
