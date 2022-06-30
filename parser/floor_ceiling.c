@@ -6,7 +6,7 @@
 /*   By: lemmon <lemmon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:42:12 by lemmon            #+#    #+#             */
-/*   Updated: 2022/06/08 13:48:31 by lemmon           ###   ########.fr       */
+/*   Updated: 2022/06/29 15:20:04 by lemmon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_atoi_cub(const char *str)
 	size_t	i;
 	int		num;
 	int		count_num;
-	size_t		j;
+	size_t	j;
 
 	count_num = 0;
 	i = 0;
