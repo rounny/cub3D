@@ -6,18 +6,18 @@
 /*   By: lemmon <lemmon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:42:07 by lemmon            #+#    #+#             */
-/*   Updated: 2022/06/28 19:24:36 by lemmon           ###   ########.fr       */
+/*   Updated: 2022/07/04 11:08:33 by lemmon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-int	is_direction(char *line, t_map *map)
+int	is_direction(char *line, t_map *map, int j)
 {
-	if ((line[0] == 'N' && line[1] == 'O' && map->flag_north == 0)
-		|| (line[0] == 'S' && line[1] == 'O' && map->flag_south == 0)
-		|| (line[0] == 'W' && line[1] == 'E' && map->flag_west == 0)
-		|| (line[0] == 'E' && line[1] == 'A' && map->flag_east == 0))
+	if ((line[j] == 'N' && line[j + 1] == 'O' && map->flag_north == 0)
+		|| (line[j] == 'S' && line[j + 1] == 'O' && map->flag_south == 0)
+		|| (line[j] == 'W' && line[j + 1] == 'E' && map->flag_west == 0)
+		|| (line[j] == 'E' && line[j + 1] == 'A' && map->flag_east == 0))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lemmon <lemmon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 17:37:45 by lemmon            #+#    #+#             */
-/*   Updated: 2022/06/29 15:01:17 by lemmon           ###   ########.fr       */
+/*   Updated: 2022/07/04 11:50:15 by lemmon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 
 # define WIDTH 	1000
 # define HEIGHT 1000
+# define SCALE	10
+# define FOV	60	
 # define KEY_ESC 53
 # define KEY_CROSS 17
 # define MASK_CROSS 131072L
@@ -52,21 +54,21 @@ typedef struct	s_mlx
 
 typedef struct s_player
 {
-	float		x; //
-	float		y; //
-	float		a; // angle
+	float	x; //
+	float	y; //
+	float	angle;
 	int		flag;
 	char	direction; //
+	float	distance;
+	double	height_wall;
 } t_player;
 
 typedef struct s_map
 {
 	int			fd;
-	int			width;
-	int			height;
+	int			width;//
+	int			height; //
 	int 		**map; //
-	char 		**test2;
-	int			*test;
 	char		*north_path; //
 	char		*south_path; //
 	char		*west_path; //
@@ -89,7 +91,6 @@ typedef struct s_map
 	int			c_blue; //
 	t_player	pers;
 	t_mlx		mlx; //
-	
 } t_map;
 
 
@@ -101,27 +102,25 @@ char	**get_line_file(int fd, t_map *map);
 void	parsing(t_map *map, int ac, char **av);
 void	check_line(char *line);
 
-char	*get_next_line(int fd);
 char	**ft_split_cub(char const *s, char c, t_map *map);
 
-// void	parse_direction(char *line);
 void	parse_direction(char *line, t_map *map);
-int		is_direction(char *line, t_map *map);
+int		is_direction(char *line, t_map *map, int j);
 
-int		is_floor_ceiling(char *line, t_map *map);
+int		is_floor_ceiling(char *line, t_map *map, int j);
 void	parse_floor_ceiling(char *line, t_map *map);
 
 void	check_map(int ac, char **av, t_map *map);
-int	check_extention(char *av, int flag);
+int		check_extention(char *av, int flag);
 
-int		is_map(char *line);
+int		is_map(char *line, int j);
 void	start_parse_map(char **array, t_map *map, int index);
+void	parse_map(t_map *map, char **array);
+void	parse_map_key(int i, int j, t_map *map, char **array);
 void	count_width(char **array, t_map *map, int index);
 void	check_empty(t_map *map);
 
-// int draw(t_mlx *mlx);
-int draw(t_map *map);
-
+int 	draw(t_map *map);
 void	free_map(t_map *map);
 
 

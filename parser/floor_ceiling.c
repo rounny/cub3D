@@ -6,7 +6,7 @@
 /*   By: lemmon <lemmon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:42:12 by lemmon            #+#    #+#             */
-/*   Updated: 2022/06/29 15:20:04 by lemmon           ###   ########.fr       */
+/*   Updated: 2022/07/04 11:48:31 by lemmon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ void	parse_floor_ceiling(char *line, t_map *map)
 		map->flag_c = 1;
 }
 
-int	is_floor_ceiling(char *line, t_map *map)
+int	is_floor_ceiling(char *line, t_map *map, int j)
 {
-	if ((line[0] == 'F' && map->flag_f == 0)
-		|| (line[0] == 'C' && map->flag_c == 0))
+	if ((line[j] == 'F' && map->flag_f == 0)
+		|| (line[j] == 'C' && map->flag_c == 0))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lemmon <lemmon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 12:39:53 by lemmon            #+#    #+#             */
-/*   Updated: 2022/06/30 14:58:38 by lemmon           ###   ########.fr       */
+/*   Updated: 2022/07/04 11:51:10 by lemmon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,25 @@ void	parse_map(t_map *map, char **array)
 
 void	start_parse_map(char **array, t_map *map, int index)
 {
-	count_width(array, map, index); // объединить в другую функцию
-	map->pers.flag = 0; // занулить всю структуру
+	count_width(array, map, index);
+	map->pers.flag = 0;
 	map->height = map->count_line - index;
 	map->map = ft_calloc(map->height, sizeof(int *));
 	parse_map(map, array);
-	// print map
-	for(int i = 0; i < map->height; ++i) { 
-		for(int j = 0; j < map->width; ++j) {
-			printf("%2d", map->map[i][j]);
-		}
-		printf("\n");
-	}
-	//
 	check_empty(map);
 }
 
-// static	void	skip_next_space(char *line, int *i)
-// {
-// 	while (line[*i] == ' ')
-// 		++(*i);
-// }
+static	void	skip_next_space(char *line, int *i)
+{
+	while (line[*i] == ' ')
+		++(*i);
+}
 
 void	parsing(t_map *map, int ac, char **av)
 {
 	char	**line;
 	int		i;
+	int		j;
 
 	map->flag_line = 0;
 	map->fd = open(av[ac - 1], O_RDONLY);
@@ -66,13 +59,14 @@ void	parsing(t_map *map, int ac, char **av)
 	i = -1;
 	while (++i < map->count_line)
 	{
-		// skip_next_space(line[i], &i);
+		j = 0;
+		skip_next_space(line[i], &j);
 		map->count_argc = 0;
-		if (is_direction(line[i], map))
-			parse_direction(line[i], map);
-		else if (is_floor_ceiling(line[i], map))
-			parse_floor_ceiling(line[i], map);
-		else if (is_map(line[i]))
+		if (is_direction(line[i], map, j))
+			parse_direction(line[i] + j, map);
+		else if (is_floor_ceiling(line[i], map, j))
+			parse_floor_ceiling(line[i] + j, map);
+		else if (is_map(line[i], j))
 		{
 			start_parse_map(line + i, map, i);
 			break ;
